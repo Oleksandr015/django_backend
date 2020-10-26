@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path
 
 from films_dict.views import hello
+from films_dict.views import movies
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', hello),
+    path("", movies, name='index'),
 ]
