@@ -11,8 +11,11 @@ class Genre(models.Model):
 
 
 class Director(models.Model):
-    first_name = models.CharField(max_length=50, unique=True)
+    first_name = models.CharField(max_length=50)
     second_name = models.CharField(max_length=50)
+
+    class Meta:
+        unique_together = ('first_name', 'second_name')
 
     def __str__(self):
         return f"{self.first_name} from {self.second_name}"
