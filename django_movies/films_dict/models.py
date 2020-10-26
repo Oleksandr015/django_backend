@@ -37,6 +37,9 @@ class Movie(models.Model):
     director = models.ForeignKey(Director, null=True, on_delete=models.DO_NOTHING)
     country = models.ManyToManyField(Country)
 
+    class Meta:
+        unique_together = ('title', 'created')
+
     def __str__(self):
         return f"{self.title} from {self.released}"
 
