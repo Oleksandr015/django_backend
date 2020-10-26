@@ -21,6 +21,10 @@ class Director(models.Model):
         return f"{self.first_name} from {self.second_name}"
 
 
+class Country(models.Model):
+    country_name = models.CharField(max_length=100, null=True)
+
+
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     rating = models.IntegerField(
@@ -31,9 +35,13 @@ class Movie(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     genre = models.ForeignKey(Genre, null=True, on_delete=models.DO_NOTHING)
     director = models.ForeignKey(Director, null=True, on_delete=models.DO_NOTHING)
+    country = models.ManyToManyField(Country)
 
     def __str__(self):
         return f"{self.title} from {self.released}"
+
+
+
 
 
 
