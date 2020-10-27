@@ -2,9 +2,9 @@
 
 {% block content %}
     <h1>Welcome to Django Movies!</h1>
-    <h2>Films with age limit less 18 y.o.</h2>
+    <h2>Films Genre:</h2>
     <ul>
-            {% for genre in genres %}
+            {% for genre in object_list %}
                 <li>
                     {{ genre }}
                 </li>
