@@ -4,7 +4,15 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Genre(models.Model):
     name = models.CharField(max_length=20, unique=True)
-    age_limit = models.CharField(max_length=100, null=True)
+    KIDS = '1'
+    TEENS = '2'
+    ADULTS = '3'
+    AGE_LIMIT_CHOICES = (
+       (KIDS, 'Kids'),
+       (TEENS, 'Teens'),
+       (ADULTS, 'Adults')
+    )
+    age_limit = models.CharField(max_length=2, choices=AGE_LIMIT_CHOICES)
 
     def __str__(self):
         return self.name
