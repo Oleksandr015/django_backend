@@ -19,8 +19,11 @@ from django.urls import path
 from films_dict.views import hello
 from films_dict.views import movies
 
+from films_dict.views import genres
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', hello),
-    path("", movies, name='index'),
+    path('', movies, name='index'),
+    path('for_young_viewers', genres, name='index'),
 ]

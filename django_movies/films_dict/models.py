@@ -1,18 +1,18 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from model_utils import Choices
+
+AGE_LIMIT_CHOICES = Choices(
+    (0, 'Kids', 'Kids'),
+    (1, 'Teens', 'Teens'),
+    (2, 'Adults', 'Adults'),
+)
 
 
 class Genre(models.Model):
     name = models.CharField(max_length=20, unique=True)
-    KIDS = '1'
-    TEENS = '2'
-    ADULTS = '3'
-    AGE_LIMIT_CHOICES = (
-       (KIDS, 'Kids'),
-       (TEENS, 'Teens'),
-       (ADULTS, 'Adults')
-    )
-    age_limit = models.CharField(max_length=2, choices=AGE_LIMIT_CHOICES)
+
+    age_limit = models.IntegerField(null=True, blank=True, choices=AGE_LIMIT_CHOICES)
 
     def __str__(self):
         return self.name
@@ -30,18 +30,18 @@ class Director(models.Model):
 
 
 class Country(models.Model):
-    countries_name = models.CharField(max_length=100, unique=True)
+    countries_name = models.CharField(max_length=100, unique=True, null=True, blank=True)
 
     def __str__(self):
         return self.countries_name
 
 
 class Movie(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, unique=True, null=True, blank=True)
     rating = models.IntegerField(
         null=True, validators=[MaxValueValidator(10), MinValueValidator(1)]
     )
-    released = models.DateField()
+    released = models.DateField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     genre = models.ForeignKey(Genre, null=True, on_delete=models.DO_NOTHING)
