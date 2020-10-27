@@ -3,9 +3,9 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from model_utils import Choices
 
 AGE_LIMIT_CHOICES = Choices(
-    (0, 'Kids', 'Kids'),
-    (1, 'Teens', 'Teens'),
-    (2, 'Adults', 'Adults'),
+    (0, 'kids', 'Kids'),
+    (1, 'keens', 'Teens'),
+    (2, 'adults', 'Adults'),
 )
 
 
