@@ -1,8 +1,11 @@
+import logging
+
 from django import views
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import TemplateView, ListView, FormView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, FormView, CreateView
 from films_dict.models import Movie, AGE_LIMIT_CHOICES, Genre
 
 from films_dict.forms import MovieForm
@@ -38,9 +41,18 @@ class GenreView(ListView):
         return context
 
 
-class MovieCreateView(FormView):
+LOGGER = logging.getLogger()
+
+
+class MovieCreateView(CreateView):
+    title = 'Add Movie'
     template_name = 'form.html'
     form_class = MovieForm
+    success_url = reverse_lazy('movie_create')
+
+    def form_invalid(self, form):
+        LOGGER.warning('Invalid data provided')
+        return super().form_invalid(form)
 
     def form_valid(self, form):
         form.save()
