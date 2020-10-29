@@ -17,12 +17,15 @@ class HelloView(views.View):
         )
 
 
-class MovieView(TemplateView):
+class MovieView(ListView):
     template_name = "movies.html"
-    extra_context = {
-        'movies': Movie.objects.all(),
-        'limits': AGE_LIMIT_CHOICES,
-    }
+    model = Movie
+
+    def get_context_data(self, **kwargs):
+        result = super().get_context_data(**kwargs)
+        result['limits'] = AGE_LIMIT_CHOICES
+
+        return result
 
 
 class GenreView(ListView):
