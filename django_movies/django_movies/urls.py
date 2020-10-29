@@ -18,10 +18,13 @@ from django.urls import path
 
 from films_dict.views import MovieView, HelloView, GenreView
 
+from films_dict.views import MovieCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', HelloView.as_view()),
     path('', MovieView.as_view(), name='index'),
-    path('genre', GenreView.as_view(), name='index'),
+    path('movie/create', MovieCreateView.as_view(success_url='create'), name='movie_create'),
+
+
 ]

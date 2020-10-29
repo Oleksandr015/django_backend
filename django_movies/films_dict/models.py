@@ -4,7 +4,7 @@ from model_utils import Choices
 
 AGE_LIMIT_CHOICES = Choices(
     (0, 'kids', 'Kids'),
-    (1, 'keens', 'Teens'),
+    (1, 'teens', 'Teens'),
     (2, 'adults', 'Adults'),
 )
 
@@ -30,18 +30,18 @@ class Director(models.Model):
 
 
 class Country(models.Model):
-    countries_name = models.CharField(max_length=100, unique=True, null=True, blank=True)
+    countries_name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.countries_name
 
 
 class Movie(models.Model):
-    title = models.CharField(max_length=100, unique=True, null=True, blank=True)
+    title = models.CharField(max_length=100)
     rating = models.IntegerField(
         null=True, validators=[MaxValueValidator(10), MinValueValidator(1)]
     )
-    released = models.DateField(null=True, blank=True)
+    released = models.DateField()
     description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     genre = models.ForeignKey(Genre, null=True, on_delete=models.DO_NOTHING)
