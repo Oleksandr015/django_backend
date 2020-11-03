@@ -25,6 +25,6 @@ urlpatterns = [
     path('hello/', HelloView.as_view()),
     path('', MovieView.as_view(), name='index'),
     path('movie/create', MovieCreateView.as_view(success_url='create'), name='movie_create'),
-
+    path('movie/update/<pk>', MovieUpdateView.as_view(success_url='create'), name='movie_update'),
 
 ]
