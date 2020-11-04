@@ -32,7 +32,7 @@ class MovieForm(forms.ModelForm):
         model = Movie
         fields = "__all__"
 
-    title = forms.CharField(validators=[capitalized_validator, validate_len_name])
+    title = forms.CharField(max_length=100, validators=[capitalized_validator, validate_len_name])
     genre = forms.ModelChoiceField(queryset=Genre.objects.all())
     rating = forms.IntegerField(min_value=1, max_value=10)
     released = PastMonthField()

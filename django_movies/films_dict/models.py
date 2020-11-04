@@ -15,7 +15,7 @@ class Genre(models.Model):
     age_limit = models.IntegerField(null=True, blank=True, choices=AGE_LIMIT_CHOICES)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Director(models.Model):
@@ -33,7 +33,7 @@ class Country(models.Model):
     countries_name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
-        return self.countries_name
+        return str(self.countries_name)
 
 
 class Movie(models.Model):
@@ -53,9 +53,3 @@ class Movie(models.Model):
 
     def __str__(self):
         return f"{self.title} from {self.released}"
-
-
-
-
-
-

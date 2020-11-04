@@ -14,16 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
 from films_dict.views import MovieView, GenreView
 
-from films_dict.views import hello
+from films_dict.views import MovieCreateView, MovieUpdateView, MovieDeleteView
 
+from django_movies.films_dict.views import MovieListView, MovieDetailView
+
+app_name = 'films_dict'
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('hello/', hello),
-    path('', MovieView.as_view(), name='index'),
-    path('film_dict', include('film_dict'.urls), namespace='film_dict'),
+    path('movie/list', MovieListView.as_view(), name='movie_list'),
+    path('movie/detail/<pk>', MovieDetailView.as_view(), name='movie_detail'),
+    path('movie/create', MovieCreateView.as_view(), name='movie_create'),
+    path('movie/update/<pk>', MovieUpdateView.as_view(), name='movie_update'),
+    path('movie/delete/<pk>', MovieDeleteView.as_view(), name='movie_delete'),
 
 ]

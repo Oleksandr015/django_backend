@@ -5,30 +5,33 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView, FormView, CreateView, UpdateView
+from django.views.generic import TemplateView, ListView, FormView, CreateView, UpdateView, DeleteView, DetailView
 from films_dict.models import Movie, AGE_LIMIT_CHOICES, Genre
 
 from films_dict.forms import MovieForm
 
 
-class HelloView(views.View):
-    def hello(request):
-        return render(
-            request,
-            template_name="hello.html",
-            context={'adjectives': ['beautiful', 'cruel', 'wonderful']}
-        )
+def hello(request):
+    return render(
+        request,
+        template_name="hello.html",
+        context={'adjectives': ['beautiful', 'cruel', 'wonderful']}
+    )
 
 
-class MovieView(ListView):
-    template_name = "movies.html"
+class MovieListView(ListView):
+    template_name = "movie_list.html"
     model = Movie
 
-    def get_context_data(self, **kwargs):
-        result = super().get_context_data(**kwargs)
-        result['limits'] = AGE_LIMIT_CHOICES
 
-        return result
+class MovieDetailView(DetailView):
+    template_name = "movie_detail.html"
+    model = Movie
+
+
+class IndexView(MovieListView):
+    template_name = 'index.html'
+    model = Movie
 
 
 class GenreView(ListView):
@@ -45,12 +48,11 @@ LOGGER = logging.getLogger()
 
 
 class MovieCreateView(CreateView):
-    title = 'Add Movie'
     template_name = 'form.html'
     form_class = MovieForm
-    success_url = reverse_lazy('movie_create')
+    success_url = reverse_lazy('index')
 
-    def form_valid(self, form):
+    '''def form_valid(self, form):
         result = super().form_valid(form)
         cleaned_data = form.cleaned_data
         Movie.objects.create(
@@ -60,7 +62,7 @@ class MovieCreateView(CreateView):
             released=cleaned_data['released'],
             description=cleaned_data['description'],
         )
-        return result
+        return result '''
 
     def form_invalid(self, form):
         LOGGER.warning('Invalid data provided')
@@ -77,4 +79,13 @@ class MovieUpdateView(UpdateView):
     def form_invalid(self, form):
         LOGGER.warning('Invalid data provided')
         return super().form_invalid(form)
+
+
+class MovieDeleteView(DeleteView):
+    title = 'Delete Movie'
+    template_name = 'movie_confirm_delete.html'
+    model = Movie
+    form_class = MovieForm
+    success_url = reverse_lazy('index')
+
 
