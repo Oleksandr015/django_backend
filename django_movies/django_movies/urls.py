@@ -16,14 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from films_dict.views import MovieView, GenreView
 
 from films_dict.views import hello
+
+from films_dict.views import IndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', hello),
-    path('', MovieView.as_view(), name='index'),
-    path('film_dict', include('film_dict'.urls), namespace='film_dict'),
+    path('', IndexView.as_view(), name='index'),
+    path('film_dict', include('film_dict.urls'), namespace='film_dict'),
 
 ]
