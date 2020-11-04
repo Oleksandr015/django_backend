@@ -9,11 +9,11 @@ register = Library()
 def movie_format(movie, short=False):
     if short:
         return f'{movie.title} ({movie.released.year})'
-    return f'({movie.title} ({movie.released.year}) - {movie.genre}'
+    return f'{movie.title} ({movie.released.year}) - {movie.genre}'
 
 
 @register.filter
 def attr_as_p(obj, attrname):
     label = escape(attrname.capitalize())
     value = escape(getattr(obj, attrname))
-    return SafeString(f'<p><strong>{label}:</strong>} {value}</p>')
+    return SafeString(f'<p><strong>{label}:</strong> {value}</p>')

@@ -25,6 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', hello),
     path('', IndexView.as_view(), name='index'),
-    path('film_dict', include('film_dict.urls'), namespace='film_dict'),
+    path('films_dict/', include('films_dict.urls', namespace='films_dict')),
 
 ]

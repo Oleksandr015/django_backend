@@ -1,6 +1,7 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Row, Column, Submit
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import SelectDateWidget
 from films_dict.models import Genre, Movie, Director, Country
 import re
 from datetime import date
@@ -33,12 +34,19 @@ class MovieForm(forms.ModelForm):
         fields = "__all__"
 
     title = forms.CharField(max_length=100, validators=[capitalized_validator, validate_len_name])
-    genre = forms.ModelChoiceField(queryset=Genre.objects.all())
     rating = forms.IntegerField(min_value=1, max_value=10)
     released = PastMonthField()
-    description = forms.CharField(widget=SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day")),
-                                  required=False)
-    director = forms.ModelChoiceField(queryset=Director.objects.all())
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            'title',
+            Row(Column('genre'), Column('rating'), Column('released')),
+            'director',
+            'description',
+            Submit('submit', 'Submit'),
+        )
 
     def clean_description(self):
         initial = self.cleaned_data['description']

@@ -18,7 +18,7 @@ from django.urls import path
 
 from films_dict.views import MovieCreateView, MovieUpdateView, MovieDeleteView
 
-from django_movies.films_dict.views import MovieListView, MovieDetailView
+from films_dict.views import MovieListView, MovieDetailView
 
 app_name = 'films_dict'
 urlpatterns = [
