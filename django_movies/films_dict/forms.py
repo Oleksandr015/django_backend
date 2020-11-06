@@ -31,9 +31,8 @@ class PastMonthField(forms.DateField):
 class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
-        fields = "__all__"
-
-    title = forms.CharField(max_length=100, validators=[capitalized_validator, validate_len_name])
+        fields = '__all__'
+    title = forms.CharField(validators=[capitalized_validator])
     rating = forms.IntegerField(min_value=1, max_value=10)
     released = PastMonthField()
 
@@ -45,6 +44,7 @@ class MovieForm(forms.ModelForm):
             Row(Column('genre'), Column('rating'), Column('released')),
             'director',
             'description',
+            'country',
             Submit('submit', 'Submit'),
         )
 
