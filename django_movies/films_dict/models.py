@@ -30,10 +30,10 @@ class Director(models.Model):
 
 
 class Country(models.Model):
-    countries_name = models.CharField(max_length=100, unique=True)
+    countries_name = models.CharField(max_length=100)
 
     def __str__(self):
-        return str(self.countries_name)
+        return self.countries_name
 
 
 class Movie(models.Model):
@@ -46,7 +46,7 @@ class Movie(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     genre = models.ForeignKey(Genre, null=True, on_delete=models.DO_NOTHING)
     director = models.ForeignKey(Director, null=True, on_delete=models.DO_NOTHING)
-    countries = models.ManyToManyField(Country, related_name="movies")
+    country = models.ManyToManyField(Country, related_name="movies")
 
     class Meta:
         unique_together = ('title', 'released')

@@ -1,6 +1,6 @@
 import logging
 
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 
 # Create your views here.
@@ -19,18 +19,13 @@ def hello(request):
     )
 
 
-class MovieListView(ListView):
+class MovieListView(LoginRequiredMixin, ListView):
     template_name = "movie_list.html"
     model = Movie
 
 
-class MovieDetailView(DetailView):
+class MovieDetailView(LoginRequiredMixin, DetailView):
     template_name = "movie_detail.html"
-    model = Movie
-
-
-class IndexView(MovieListView):
-    template_name = 'index.html'
     model = Movie
 
 
@@ -47,7 +42,7 @@ class GenreView(ListView):
 LOGGER = logging.getLogger()
 
 
-class MovieCreateView(CreateView):
+class MovieCreateView(LoginRequiredMixin, CreateView):
     template_name = 'form.html'
     form_class = MovieForm
     success_url = reverse_lazy('index')
@@ -69,7 +64,7 @@ class MovieCreateView(CreateView):
         return super().form_invalid(form)
 
 
-class MovieUpdateView(UpdateView):
+class MovieUpdateView(LoginRequiredMixin, UpdateView):
     title = 'Update Movie'
     template_name = 'form.html'
     model = Movie
@@ -81,11 +76,9 @@ class MovieUpdateView(UpdateView):
         return super().form_invalid(form)
 
 
-class MovieDeleteView(DeleteView):
+class MovieDeleteView(LoginRequiredMixin, DeleteView):
     title = 'Delete Movie'
     template_name = 'movie_confirm_delete.html'
     model = Movie
     form_class = MovieForm
     success_url = reverse_lazy('index')
-
-
