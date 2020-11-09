@@ -19,12 +19,13 @@ from django.urls import path, include
 
 from films_dict.views import hello
 
-from films_dict.views import IndexView
+from django_movies.views import IndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', hello),
     path('', IndexView.as_view(), name='index'),
     path('films_dict/', include('films_dict.urls', namespace='films_dict')),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
 
 ]

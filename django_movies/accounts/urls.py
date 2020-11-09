@@ -1,15 +1,14 @@
-from sys import path
 
 from django.contrib.auth.views import LoginView
 
-from accounts.views import SuccessMessagedLogoutView, SubmittablePasswordChangeView
-
+from accounts.views import SuccessMessagedLogoutView, SubmittablePasswordChangeView, SubmittableLoginView
+from django.urls import path
 
 
 app_name = 'accounts'
 
 urlpatterns = [
-    path('login/', LoginView.as_view(), name='login'),
+    path('login/', SubmittableLoginView.as_view(), name='login'),
     path('logout/', SuccessMessagedLogoutView.as_view(), name='logout'),
-    path('login/', SubmittablePasswordChangeView(), name='password_change'),
+    path('password-change/', SubmittablePasswordChangeView.as_view(), name='password_change'),
 ]
