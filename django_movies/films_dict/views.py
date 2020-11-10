@@ -1,6 +1,6 @@
 import logging
 
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render
 
 # Create your views here.
@@ -11,6 +11,11 @@ from films_dict.models import Movie, AGE_LIMIT_CHOICES, Genre
 from films_dict.forms import MovieForm
 
 
+class StaffRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_staff
+
+
 def hello(request):
     return render(
         request,
@@ -19,7 +24,7 @@ def hello(request):
     )
 
 
-class MovieListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class MovieListView(LoginRequiredMixin, ListView):
     template_name = "movie_list.html"
     model = Movie
 
@@ -43,7 +48,7 @@ LOGGER = logging.getLogger()
 
 
 class MovieCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    template_name = 'form.html'
+    template_name = 'forms.html'
     form_class = MovieForm
     success_url = reverse_lazy('index')
 
@@ -66,7 +71,7 @@ class MovieCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 class MovieUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     title = 'Update Movie'
-    template_name = 'form.html'
+    template_name = 'forms.html'
     model = Movie
     form_class = MovieForm
     success_url = reverse_lazy('index')

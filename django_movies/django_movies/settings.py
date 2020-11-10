@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'films_dict',
     'bootstrap4',
     'crispy_forms',
+    'accounts'
 ]
 
 MIDDLEWARE = [
