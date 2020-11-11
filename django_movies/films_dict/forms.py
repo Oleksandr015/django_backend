@@ -36,19 +36,18 @@ class MovieForm(forms.ModelForm):
     title = forms.CharField(validators=[capitalized_validator])
     rating = forms.IntegerField(min_value=1, max_value=10)
     released = PastMonthField()
-
-    description = forms.CharField(widget=forms.Textarea, required=False)
     genre = forms.ModelChoiceField(queryset=Genre.objects.all())
     created = forms.DateTimeField()
     director = forms.ModelChoiceField(queryset=Director.objects.all())
+    description = forms.CharField(widget=forms.Textarea, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
             'title',
-            Row(Column('rating'), Column('released'), Column('description'), Column('created'), Column('genre')),
-            'director',
+            Row(Column('rating'), Column('released'), Column('created'), Column('genre')),
+            'director', 'description',
             Submit('submit', 'Submit')
 
         )

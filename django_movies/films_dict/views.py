@@ -24,12 +24,12 @@ def hello(request):
     )
 
 
-class MovieListView(LoginRequiredMixin, ListView):
+class MovieListView(ListView):
     template_name = "movie_list.html"
     model = Movie
 
 
-class MovieDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class MovieDetailView(LoginRequiredMixin, DetailView):
     template_name = "movie_detail.html"
     model = Movie
 
@@ -47,8 +47,8 @@ class GenreView(ListView):
 LOGGER = logging.getLogger()
 
 
-class MovieCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    template_name = 'forms.html'
+class MovieCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'form.html'
     form_class = MovieForm
     success_url = reverse_lazy('index')
 
@@ -71,10 +71,10 @@ class MovieCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 class MovieUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     title = 'Update Movie'
-    template_name = 'forms.html'
+    template_name = 'form.html'
     model = Movie
     form_class = MovieForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('films_dict:movie_list')
 
     def form_invalid(self, form):
         LOGGER.warning('Invalid data provided')
@@ -86,4 +86,4 @@ class MovieDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = 'movie_confirm_delete.html'
     model = Movie
     form_class = MovieForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('films_dict:movie_list')
