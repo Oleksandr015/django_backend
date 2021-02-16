@@ -1,3 +1,3 @@
 # django_backend
 
-This repository contains my tutorials with several examples of creating a database.
+DjangoMovi application - an online catalog of films created for educational purposes as part of the SDA course # django_backendю
